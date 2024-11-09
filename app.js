@@ -13,7 +13,8 @@ function updateTime() {
     const dateString = now.toLocaleDateString('en-AU', { 
         weekday: 'long', 
         month: 'long', 
-        day: 'numeric' 
+        day: 'numeric',
+        year: 'numeric'  
     });
     
     document.getElementById('dateDisplay').textContent = dateString;
@@ -141,6 +142,9 @@ function updateWeatherDisplay(data) {
                     </div>
                 ` : ''}
             </div>
+            <div id="lastUpdated" class="last-updated">
+                Last updated: ${formatLastUpdated()}
+            </div>
         </div>
     `;
 }
@@ -256,35 +260,77 @@ const WEST_RYDE_COORDS = {
 // Modify your initialization code
 async function initializeWeatherDashboard() {
     try {
-        // Start both fetches in parallel
-        const [weatherData, transportData] = await Promise.all([
-            fetchWeatherData(),
-            fetchTransportData(WEST_RYDE_COORDS.latitude, WEST_RYDE_COORDS.longitude)
-        ]);
+        // Initial update
+        updateTime();
+        const weatherData = await fetchWeatherData();
+        const transportData = await fetchTransportData(WEST_RYDE_COORDS.latitude, WEST_RYDE_COORDS.longitude);
         
-        // Weather and transport will update independently
         updateWeatherDisplay(weatherData);
         updateTransportDisplay(transportData);
         
         // Set up refresh intervals
-        setInterval(updateTime, 1000);
-        setInterval(async () => {
-            const weatherData = await fetchWeatherData();
-            updateWeatherDisplay(weatherData);
-        }, 300000); // Update weather every 5 minutes
+        setInterval(updateTime, 1000);  // Update time every second
         
+        // Update weather every 5 minutes
         setInterval(async () => {
-            const transportData = await fetchTransportData(WEST_RYDE_COORDS.latitude, WEST_RYDE_COORDS.longitude);
-            updateTransportDisplay(transportData);
-        }, 60000); // Update transport every minute
+            try {
+                const weatherData = await fetchWeatherData();
+                updateWeatherDisplay(weatherData);
+                updateLastUpdated();
+            } catch (error) {
+                console.error('Error updating weather:', error);
+            }
+        }, 300000);
+        
+        // Update transport every minute
+        setInterval(async () => {
+            try {
+                const transportData = await fetchTransportData(WEST_RYDE_COORDS.latitude, WEST_RYDE_COORDS.longitude);
+                updateTransportDisplay(transportData);
+            } catch (error) {
+                console.error('Error updating transport:', error);
+            }
+        }, 60000);
         
     } catch (error) {
         console.error('Error initializing dashboard:', error);
     }
 }
 
-// Call this when the page loads
-document.addEventListener('DOMContentLoaded', initializeWeatherDashboard);
+// Make sure updateTime runs immediately when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    updateTime(); // Run immediately
+    setInterval(updateTime, 1000); // Then update every second
+    
+    // Initialize the dashboard
+    initializeWeatherDashboard();
+    
+    // Force page refresh every 5 minutes
+    setInterval(() => {
+        window.location.reload();
+    }, 5 * 60 * 1000);
+});
+
+function formatLastUpdated() {
+    const now = new Date();
+    return now.toLocaleTimeString('en-AU', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    });
+}
+
+function updateLastUpdated() {
+    const lastUpdatedElement = document.getElementById('lastUpdated');
+    if (lastUpdatedElement) {
+        lastUpdatedElement.textContent = `Last updated: ${formatLastUpdated()}`;
+    }
+}
+
+// Force page refresh every 6 hours
+setInterval(() => {
+    window.location.reload();
+}, 10 * 60 * 1000);
 
 
 
