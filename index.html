@@ -26,6 +26,8 @@
 
             <h1>28 Farnell Street, West Ryde</h1>
 
+            <div class="date" id="dateDisplay"></div>
+
             <div class="time" id="timeDisplay"></div>
 
         </header>
@@ -38,11 +40,49 @@
 
                 <div class="weather-content">
 
-                    <h2>Loading weather data...</h2>
+                    <div class="current-weather">
+
+                        <h2>Current Weather</h2>
+
+                        <div class="weather-main">
+
+                            <i class="wi ${weatherIcon} weather-icon"></i>
+
+                            <div id="temperature">${Math.round(data.current.temperature_2m)}°C</div>
+
+                        </div>
+
+                        <div id="condition">${weatherDescription}</div>
+
+                        <div class="overnight-low ${tempClass}">
+
+                            <i class="wi ${tempIcon}"></i>
+
+                            Overnight Low: ${overnightLow}°C
+
+                        </div>
+
+                    </div>
 
                 </div>
 
             </section>
+
+            <div id="transport-widget">
+
+                <div class="transport-content">
+
+                    <h2>Next Departures</h2>
+
+                    <div class="departures">
+
+                        <div class="departure">Loading transport data...</div>
+
+                    </div>
+
+                </div>
+
+            </div>
 
         </main>
 

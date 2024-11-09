@@ -170,6 +170,34 @@ h1 {
 
 
 
+#dateDisplay {
+
+
+
+    font-size: 1.5em;
+
+
+
+    color: #666;
+
+
+
+    margin-top: 10px;
+
+
+
+    text-align: center;
+
+
+
+}
+
+
+
+
+
+
+
 .widget {
 
 
@@ -279,6 +307,26 @@ h1 {
 
 
     color: #333;
+
+
+
+    transition: transform 0.3s ease;
+
+
+
+}
+
+
+
+
+
+
+
+.weather-icon:hover {
+
+
+
+    transform: scale(1.1);
 
 
 
@@ -529,3 +577,432 @@ h1 {
 }
 
 
+
+
+
+
+
+.radar-wrapper {
+
+
+
+    width: 100%;
+
+
+
+    text-align: center;
+
+
+
+    padding: 10px;
+
+
+
+}
+
+
+
+
+
+
+
+.radar-wrapper h3 {
+
+
+
+    margin-bottom: 15px;
+
+
+
+    color: #333;
+
+
+
+}
+
+
+
+
+
+
+
+.radar-image {
+
+
+
+    width: 100%;
+
+
+
+    max-width: 512px;
+
+
+
+    height: auto;
+
+
+
+    border-radius: 10px;
+
+
+
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+
+
+}
+
+
+
+
+
+
+
+.radar-frames {
+
+
+
+    position: relative;
+
+
+
+    width: 100%;
+
+
+
+    max-width: 512px;
+
+
+
+    margin: 0 auto;
+
+
+
+}
+
+
+
+
+
+
+
+.radar-image {
+
+
+
+    width: 100%;
+
+
+
+    height: auto;
+
+
+
+    border-radius: 10px;
+
+
+
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+
+
+}
+
+
+
+
+
+
+
+.current-frame {
+
+
+
+    display: block !important;
+
+
+
+}
+
+
+
+
+
+
+
+.humidity-container {
+
+
+
+    margin: 5px 0;
+
+
+
+    width: 100%;
+
+
+
+}
+
+
+
+
+
+
+
+.humidity-label {
+
+
+
+    margin-bottom: 5px;
+
+
+
+}
+
+
+
+
+
+
+
+.humidity-bar {
+
+
+
+    width: 100%;
+
+
+
+    height: 15px;
+
+
+
+    background-color: #e0e0e0;
+
+
+
+    border-radius: 7px;
+
+
+
+    overflow: hidden;
+
+
+
+}
+
+
+
+
+
+
+
+.humidity-fill {
+
+
+
+    height: 100%;
+
+
+
+    background-color: #355aff;
+
+
+
+    transition: width 0.5s ease-in-out;
+
+
+
+}
+
+
+
+
+
+
+
+/* Sun rays rotation animation */
+.wi-day-sunny {
+    animation: rays-rotate 8s linear infinite;
+}
+
+@keyframes rays-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Sun peeking behind cloud animation */
+.wi-day-cloudy {
+    animation: sun-peek 3s ease-in-out infinite;
+}
+
+@keyframes sun-peek {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(3px); }
+    100% { transform: translateX(0); }
+}
+
+/* Cloud movement animation */
+.wi-cloud {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+    100% { transform: translateY(0); }
+}
+
+/* Rain animation */
+.wi-rain {
+    animation: rain-bounce 1s ease-in-out infinite;
+}
+
+@keyframes rain-bounce {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(2px); }
+    100% { transform: translateY(0); }
+}
+
+/* General weather icon hover effect */
+.weather-icon {
+    transition: transform 0.3s ease;
+}
+
+.weather-icon:hover {
+    transform: scale(1.1);
+}
+
+.hourly-probabilities {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.prob-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    flex: 1;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.prob-card:hover {
+    transform: translateY(-3px);
+}
+
+.prob-card .time {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.prob-card i {
+    font-size: 3.5em;
+    color: #3c26ff;
+    margin: 10px 0;
+}
+
+.prob-card .probability {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Rain warning styles */
+.rain-warning {
+    border: 8px solid #ff0000;
+    animation: pulse 2s infinite;
+}
+
+.rain-warning-message {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #ff000020;
+    color: #ff0000;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.rain-warning-message i {
+    font-size: 1.5em;
+}
+
+@keyframes pulse {
+    0% { border-color: rgba(255, 0, 0, 1); }
+    50% { border-color: rgba(255, 0, 0, 0.5); }
+    100% { border-color: rgba(255, 0, 0, 1); }
+}
+
+.current-weather h2 {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.prob-card.has-rain {
+    background-color: rgba(135, 206, 235, 0.2); /* light blue with 20% opacity */
+}
+
+.overnight-low {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.overnight-low i {
+    font-size: 1.2em;
+}
+
+.temp-cold {
+    color: #007bff;  /* blue */
+}
+
+.temp-mild {
+    color: #666;     /* gray */
+}
+
+.temp-hot {
+    color: #dc3545;  /* red */
+}
+
+.transport-widget {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.departure {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.route {
+    font-weight: bold;
+    padding: 2px 8px;
+    background: #0056b3;
+    color: white;
+    border-radius: 4px;
+}
+
+.time {
+    color: #666;
+}
